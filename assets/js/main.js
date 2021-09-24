@@ -1,3 +1,31 @@
+var data;
+
+function loadJSON(callback) {
+  var xobj = new XMLHttpRequest();
+  xobj.overrideMimeType("application/json");
+  xobj.open('GET', './noms.json', true);
+  xobj.onreadystatechange = function ()
+  {
+    if (xobj.readyState == 4 && xobj.status == "200")
+    {
+      callback(xobj.responseText);
+    }
+  };
+  xobj.send(null);
+}
+
+function getRandomIndex(targetArray) {
+  return Math.floor(Math.random() * targetArray.length);
+}
+
+function getIndexValue(targetArray, index= -1) {
+  if (index > 0) {
+    return targetArray[index];
+  } else {
+    return targetArray[getRandomIndex(targetArray)];
+  }
+}
+
 function douxItte() {
   const noms = [
     "Amour",
@@ -92,12 +120,15 @@ function douxItte() {
     "Spontané",
     "Urbain",
   ];
+  if (data !== null) {
+    noms = data["nom"];
+    adjectifs = data["nom"];
+  }
 
-  const nom = noms[Math.floor(Math.random() * noms.length)],
-      nom2 = noms[Math.floor(Math.random() * noms.length)]
-  adjectif = adjectifs[Math.floor(Math.random() * adjectifs.length)],
-      verbMode = Math.random() < 0.5,
-      $result = document.getElementById("result");
+  const nom = getIndexValue(noms),//noms[Math.floor(Math.random() * noms.length)],
+    adjectif = getIndexValue(adjectifs),//adjectifs[Math.floor(Math.random() * adjectifs.length)],
+    verbMode = Math.random() < 0.5,
+    $result = document.getElementById("result");
 
   let resultat;
 
@@ -110,7 +141,20 @@ function douxItte() {
   $result.innerHTML = resultat;
 }
 
+
+function init() {
+  loadJSON(function(response) {
+    // Parse JSON string into object
+    data = JSON.parse(response);
+    console.log(data);
+    douxItte();
+  });
+}
+
+//  Assign callback to events.
 const $btn = document.getElementById("regenerate");
 $btn.addEventListener("click", douxItte);
 
-$btn.dispatchEvent(new Event("click"));
+//  First load
+//$btn.dispatchEvent(new Event("click"));
+init();
