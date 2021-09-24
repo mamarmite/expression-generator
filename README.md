@@ -1,3 +1,5 @@
 # Générateur de mots
-programmé par @isotrope
+Programmé par @isotrope
 initialement développé : https://codepen.io/isotrope/pen/PojyGxv
+
+Modifié par @mamarmite
