@@ -129,8 +129,8 @@ function douxItte() {
   var noms, adjectifs;
 
   if (data !== null) {
-    noms = data["nom"];
-    adjectifs = data["adjectifs"];
+    noms = data.nom;
+    adjectifs = data.adjectifs;
   } else {
     noms = nomsIfNoJSON;
     adjectifs = adjectifsIfNoJSON;
