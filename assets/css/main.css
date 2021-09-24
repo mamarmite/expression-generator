@@ -1,0 +1,26 @@
+body {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+#result {
+  font-family: "Special Elite", cursive;
+  font-size: 64px;
+}
+
+#regenerate {
+ 
+  border-radius: 10px;
+  border: 2px solid #173673;
+  background: #2173A6;
+  color: #fff;
+  font-size: 22px;
+  margin-top: 50px;
+  padding: 10px 15px;
+  
+  cursor: pointer;
+}
