@@ -27,7 +27,8 @@ function getIndexValue(targetArray, index= -1) {
 }
 
 function douxItte() {
-  const noms = [
+  var noms, adjectifs;
+  const nomsIfNoJSON = [
     "Amour",
     "Amulette",
     "Ancêtre",
@@ -98,7 +99,7 @@ function douxItte() {
     "Vérité",
   ];
 
-  const adjectifs = [
+  const adjectifsIfNoJSON = [
     "Alpin",
     "Chaotique",
     "Chic",
@@ -120,9 +121,13 @@ function douxItte() {
     "Spontané",
     "Urbain",
   ];
+
   if (data !== null) {
     noms = data["nom"];
-    adjectifs = data["nom"];
+    adjectifs = data["adjectifs"];
+  } else {
+    noms = nomsIfNoJSON;
+    adjectifs = adjectifsIfNoJSON;
   }
 
   const nom = getIndexValue(noms),//noms[Math.floor(Math.random() * noms.length)],
