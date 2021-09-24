@@ -1,6 +1,6 @@
 var data;
 
-const nomsIfNoJSON = [
+var nomsIfNoJSON = [
   "Amour",
   "Amulette",
   "Ancêtre",
@@ -71,7 +71,7 @@ const nomsIfNoJSON = [
   "Vérité",
 ];
 
-const adjectifsIfNoJSON = [
+var adjectifsIfNoJSON = [
   "Alpin",
   "Chaotique",
   "Chic",
@@ -120,6 +120,11 @@ function getIndexValue(targetArray, index= -1) {
   }
 }
 
+function renderResult(element, content)
+{
+  element.innerHTML = content;
+}
+
 function douxItte() {
   var noms, adjectifs;
 
@@ -144,7 +149,7 @@ function douxItte() {
     resultat = [adjectif, nom.toLowerCase()].join(" ");
   }
 
-  $result.innerHTML = resultat;
+  renderResult($result, resultat);
 }
 
 
