@@ -97,7 +97,7 @@ var adjectifsIfNoJSON = [
 function loadJSON(callback) {
   var xobj = new XMLHttpRequest();
   xobj.overrideMimeType("application/json");
-  xobj.open('GET', './noms.json', true);
+  xobj.open('GET', 'https://mamarmite.github.io/expression-generator/noms.json', true);
   xobj.onreadystatechange = function ()
   {
     if (xobj.readyState == 4 && xobj.status == "200")
@@ -131,9 +131,11 @@ function douxItte() {
   if (data !== null) {
     noms = data.noms;
     adjectifs = data.adjectifs;
+    console.log("Loaded from json");
   } else {
     noms = nomsIfNoJSON;
     adjectifs = adjectifsIfNoJSON;
+    console.log("Loaded from constants");
   }
 
   const nom = getIndexValue(noms),//noms[Math.floor(Math.random() * noms.length)],
@@ -157,7 +159,6 @@ function init() {
   loadJSON(function(response) {
     // Parse JSON string into object
     data = JSON.parse(response);
-    console.log(data.adjectifs, data.noms);
     douxItte();
   });
 }
