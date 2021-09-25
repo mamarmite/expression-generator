@@ -129,7 +129,7 @@ function douxItte() {
   var noms, adjectifs;
 
   if (data !== null) {
-    noms = data.nom;
+    noms = data.noms;
     adjectifs = data.adjectifs;
   } else {
     noms = nomsIfNoJSON;
@@ -157,7 +157,7 @@ function init() {
   loadJSON(function(response) {
     // Parse JSON string into object
     data = JSON.parse(response);
-    console.log(data);
+    console.log(data.adjectifs, data.noms);
     douxItte();
   });
 }
