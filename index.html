@@ -9,8 +9,24 @@
         <link href="assets/css/main.css?v=0.1" rel="stylesheet">
     </head>
     <body>
-        <div id="result"></div>
+        <h1 id="result"></h1>
         <button id="regenerate" class="button button--isi button--border-thick button--round-l button--size-s">Encore</button>
+        <div id="edit_panel" class="row">
+            <div id="nom">
+                <h4>Nom <small id="noms_count"></small></h4>
+                <input type="text" name="new_nom" id="new_nom" placeholder="Ajouter un Noms" />
+                <button id="add_nom" class="button button--isi button--border-thick button--round-l button--size-s">+</button>
+            </div>
+            <div id="adjectif">
+                <h4>Adjectif <small id="adjectifs_count"></small></h4>
+                <input type="text" name="new_adjectif" id="new_adjectif" placeholder="Ajouter un adjectif" />
+                <button id="add_adjectif" class="button button--isi button--border-thick button--round-l button--size-s">+</button>
+            </div>
+        </div>
+        <div id="history">
+
+        </div>
         <script src="assets/js/main.js"></script>
+        <script src="assets/js/history.js"></script>
     </body>
 </html>

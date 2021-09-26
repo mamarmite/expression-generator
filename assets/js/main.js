@@ -1,5 +1,4 @@
 var data;
-
 var nomsIfNoJSON = [
   "Amour",
   "Amulette",
@@ -70,7 +69,6 @@ var nomsIfNoJSON = [
   "Voilier",
   "Vérité",
 ];
-
 var adjectifsIfNoJSON = [
   "Alpin",
   "Chaotique",
@@ -94,6 +92,8 @@ var adjectifsIfNoJSON = [
   "Urbain",
 ];
 
+
+
 function loadJSON(callback) {
   var xobj = new XMLHttpRequest();
   xobj.overrideMimeType("application/json");
@@ -108,11 +108,13 @@ function loadJSON(callback) {
   xobj.send(null);
 }
 
+
 function getRandomIndex(targetArray) {
   return Math.floor(Math.random() * targetArray.length);
 }
 
-function getIndexValue(targetArray, index= -1) {
+function getIndexValue(targetArray, index= -1)
+{
   if (index > 0) {
     return targetArray[index];
   } else {
@@ -120,11 +122,39 @@ function getIndexValue(targetArray, index= -1) {
   }
 }
 
-function renderResult(element, content)
+
+function renderResult(elementId, content)
 {
-  element.innerHTML = content;
+  let $tag = document.getElementById(elementId);
+  $tag.innerHTML = content;
 }
 
+
+function renderUIInfo() {
+  renderResult("noms_count", "("+data.noms.length+")");
+  renderResult("adjectifs_count", "("+data.adjectifs.length+")");
+}
+
+
+function addWordIn(word, targetData)
+{
+  var canAddWord = true;
+  //check if the word already exist.
+  targetData.forEach(function(element) {
+    if (word === element) {
+      canAddWord = false;
+    }
+  });
+
+  if (canAddWord) {
+    //add the word to.
+    targetData.push(word);
+  }
+  return targetData;
+}
+
+
+//encore btn - main action.
 function douxItte() {
   var noms, adjectifs;
 
@@ -140,8 +170,7 @@ function douxItte() {
 
   const nom = getIndexValue(noms),//noms[Math.floor(Math.random() * noms.length)],
     adjectif = getIndexValue(adjectifs),//adjectifs[Math.floor(Math.random() * adjectifs.length)],
-    verbMode = Math.random() < 0.5,
-    $result = document.getElementById("result");
+    verbMode = Math.random() < 0.5;
 
   let resultat;
 
@@ -151,7 +180,22 @@ function douxItte() {
     resultat = [adjectif, nom.toLowerCase()].join(" ");
   }
 
-  renderResult($result, resultat);
+  addHistoryLine(resultat);
+  renderHistory();
+  renderResult("result", resultat);
+}
+
+
+function addNom() {
+  newNom = document.getElementById("new_nom").value;
+  data.noms = addWordIn(newNom, data.noms);
+  renderUIInfo();
+}
+
+function addAdjectif() {
+  newAdjectif = document.getElementById("new_adjectif").value;
+  data.adjectifs = addWordIn(newAdjectif, data.adjectifs);
+  renderUIInfo();
 }
 
 
@@ -159,13 +203,20 @@ function init() {
   loadJSON(function(response) {
     // Parse JSON string into object
     data = JSON.parse(response);
+    renderUIInfo();
     douxItte();
   });
 }
 
 //  Assign callback to events.
-const $btn = document.getElementById("regenerate");
+const $btn = document.getElementById("regenerate"),
+  $btnAddNoms = document.getElementById('add_nom'),
+  $btnAddAdjectifs = document.getElementById('add_adjectif');
+
 $btn.addEventListener("click", douxItte);
+$btnAddNoms.addEventListener("click", addNom);
+$btnAddAdjectifs.addEventListener("click", addAdjectif);
+
 
 //  First load
 //$btn.dispatchEvent(new Event("click"));

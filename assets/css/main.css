@@ -1,31 +1,94 @@
+body, html {
+  font-size: 16px;
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
+
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90vh;
-
+  height: 100vh;
   background: url(https://images.unsplash.com/photo-1505744386214-51dba16a26fc?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzMjUxMzYzMw&ixlib=rb-1.2.1&q=85) no-repeat center center / cover;
 }
 
 #result {
-  font-family: "Special Elite", cursive;
-  font-size: 64px;
   transform: translateX(-25%);
+  font-size: 64px;
 }
 
-#regenerate {
+#history {
+  position: fixed;
+  left: 0;
+  top: 0;
+  text-align: left;
+  width: 10vw;
+  height: 100vh;
+  padding: 1.5em;
+  overflow-y: auto;
+}
+#history.close {
+  left: -10vw;
+}
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Special Elite", cursive;
+}
+
+#edit_panel {
+  position: fixed;
+  bottom:0;
+  width: 100%;
+  padding: 3em;
+}
+
+.button {
   border-radius: 10px;
   border: 2px solid #173673;
   background: #2173A6;
   color: #fff;
-  font-size: 22px;
-  margin-top: 60px;
-  padding: 10px 15px;
-
+  padding: 0.5em 1em;
   cursor: pointer;
+}
+.button:hover {
+  border: 2px solid #2173A6;
+  background: #173673;
+}
 
+#regenerate {
+  margin-top: 60px;
   transform: translateX(-25%);
+  font-size: 22px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.row > * {
+  padding: 0 1em;
+}
+
+input[type=text] {
+  padding: 0.5em 1em;
+  border: 0;
 }
