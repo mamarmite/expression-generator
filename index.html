@@ -10,25 +10,26 @@
     </head>
     <body>
         <h1 id="result"></h1>
-        <button id="regenerate" class="button button--isi button--border-thick button--round-l button--size-s">Encore</button>
+        <button id="regenerate" class="button">Encore</button>
         <div id="edit_panel" class="row">
             <div id="nom">
                 <label for="new_nom">Nom <small id="noms_count"></small>
                 <input type="text" name="new_nom" id="new_nom" placeholder="Ajouter un Noms" /></label>
-                <button id="add_nom" class="button button--isi button--border-thick button--round-l button--size-s">+</button>
+                <button id="add_nom" class="button">+</button>
             </div>
             <div id="adjectif">
                 <label for="new_adjectif">Adjectif <small id="adjectifs_count"></small>
                 <input type="text" name="new_adjectif" id="new_adjectif" placeholder="Ajouter un adjectif" /></label>
-                <button id="add_adjectif" class="button button--isi button--border-thick button--round-l button--size-s">+</button>
+                <button id="add_adjectif" class="button">+</button>
             </div>
         </div>
-        <div id="history"></div>
+        <button id="history_toggler" class="button closed">&larr;</button>
+        <div id="history" class="closed"></div>
 
         <script src="assets/js/json.js"></script>
         <script src="assets/js/files.js"></script>
-        <script src="assets/js/history.js"></script>
         <script src="assets/js/ui.js"></script>
+        <script src="assets/js/history.js"></script>
         <script src="assets/js/main.js"></script>
     </body>
 </html>

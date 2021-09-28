@@ -37,9 +37,28 @@ body {
   height: 100vh;
   padding: 1.5em;
   overflow-y: auto;
+
+  -webkit-transition: all .5s ease-in-out;
+  -moz-transition: all .5s ease-in-out;
+  -o-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
 }
-#history.close {
+#history.closed {
   left: -10vw;
+}
+
+#history_toggler {
+  position: fixed;
+  top: 1em;
+  left: 10vw;
+  -webkit-transition: all .5s ease-in-out;
+  -moz-transition: all .5s ease-in-out;
+  -o-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+}
+#history_toggler.closed {
+  top: 1em;
+  left: 0;
 }
 
 h1,

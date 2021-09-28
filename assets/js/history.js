@@ -1,5 +1,5 @@
 
-var expressionHistory = [];
+const expressionHistory = [];
 
 function addHistoryLine(line, render = true) {
     expressionHistory.push(line);
@@ -9,10 +9,10 @@ function addHistoryLine(line, render = true) {
 }
 
 function renderHistory() {
-    $historyContainer = document.getElementById('history');
-    historyText = "";
+    let historyText = "";
+
     expressionHistory.forEach(function(line) {
         historyText += "<div>" + line + "</div>";
     });
-    $historyContainer.innerHTML = historyText;
+    $history.innerHTML = historyText;
 }
