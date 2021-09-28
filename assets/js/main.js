@@ -1,96 +1,4 @@
-var data;
-var nomsIfNoJSON = [
-  "Amour",
-  "Amulette",
-  "Ancêtre",
-  "Anneau",
-  "Assiette",
-  "Bijou",
-  "Biscuit",
-  "Bonbon",
-  "Burger",
-  "Camion",
-  "Canard",
-  "Carotte",
-  "Charité",
-  "Chat",
-  "Château",
-  "Citron",
-  "Clé",
-  "Couteau",
-  "Crabe",
-  "Craquelin",
-  "Crayon",
-  "Culte",
-  "Danger",
-  "Diamant",
-  "Énigme",
-  "Fantôme",
-  "Fraise",
-  "Fruit",
-  "Hasard",
-  "Jus",
-  "Laitue",
-  "Liberté",
-  "Lit",
-  "Livraison",
-  "Lutin",
-  "Légumes",
-  "Manette",
-  "Miracle",
-  "Mixture",
-  "Montagne",
-  "Moustache",
-  "Nuit",
-  "Oeuf",
-  "Ogre",
-  "Olive",
-  "Ours",
-  "Pain",
-  "Parfum",
-  "Patience",
-  "Pierre",
-  "Pieuvre",
-  "Pirate",
-  "Potage",
-  "Rôti",
-  "Sac",
-  "Sage",
-  "Salade",
-  "Sept",
-  "Soleil",
-  "Soulier",
-  "Système",
-  "Tarte",
-  "Tarôt",
-  "Taxi",
-  "Tempête",
-  "Tricot",
-  "Voilier",
-  "Vérité",
-];
-var adjectifsIfNoJSON = [
-  "Alpin",
-  "Chaotique",
-  "Chic",
-  "Cru",
-  "Dynamique",
-  "Débutant",
-  "Flamboyant",
-  "Géant",
-  "Incroyable",
-  "Irrésistible",
-  "Jumeaux",
-  "Ludique",
-  "Lumineux",
-  "Merveilleux",
-  "Nomade",
-  "Patient",
-  "Pollué",
-  "Positif",
-  "Spontané",
-  "Urbain",
-];
+
 
 const name = 'nom',
     adjective = 'adjectif';
@@ -117,24 +25,10 @@ var modes = [
 ];
 
 
-function loadJSON(callback) {
-  var xobj = new XMLHttpRequest();
-  xobj.overrideMimeType("application/json");
-  xobj.open('GET', 'https://mamarmite.github.io/expression-generator/noms.json', true);
-  xobj.onreadystatechange = function ()
-  {
-    if (xobj.readyState == 4 && xobj.status == "200")
-    {
-      callback(xobj.responseText);
-    }
-  };
-  xobj.send(null);
-}
-
-
 function getRandomIndex(targetArray) {
   return Math.floor(Math.random() * targetArray.length);
 }
+
 
 function getIndexValue(targetArray, index= -1)
 {
@@ -144,6 +38,7 @@ function getIndexValue(targetArray, index= -1)
     return targetArray[getRandomIndex(targetArray)];
   }
 }
+
 
 function getMode() {
   var rand = Math.random(),
@@ -157,8 +52,7 @@ function getMode() {
 }
 
 
-function renderResult(elementId, content)
-{
+function renderResult(elementId, content) {
   let $tag = document.getElementById(elementId);
   $tag.innerHTML = content;
 }
@@ -170,8 +64,7 @@ function renderUIInfo() {
 }
 
 
-function addWordIn(word, targetData)
-{
+function addWordIn(word, targetData) {
   var canAddWord = true;
   //check if the word already exist.
   targetData.forEach(function(element) {
@@ -190,26 +83,14 @@ function addWordIn(word, targetData)
 
 //encore btn - main action.
 function douxItte() {
-  var noms, adjectifs;
+  var noms = data.noms,
+      adjectifs = data.adjectifs;
 
-  if (data !== null) {
-    noms = data.noms;
-    adjectifs = data.adjectifs;
-    console.log("Loaded from json");
-  } else {
-    noms = nomsIfNoJSON;
-    adjectifs = adjectifsIfNoJSON;
-    console.log("Loaded from constants");
-  }
-
-  const nom = getIndexValue(noms),//noms[Math.floor(Math.random() * noms.length)],
-    adjectif = getIndexValue(adjectifs),//adjectifs[Math.floor(Math.random() * adjectifs.length)],
-    verbMode = Math.random() < 0.5;
+  const nom = getIndexValue(noms),
+    adjectif = getIndexValue(adjectifs);
 
   let resultat = [];
   var currentMode = getMode();
-
-  console.log(currentMode);
 
   currentMode.config.forEach(function(word, index) {
     let targetWord = "";
@@ -227,7 +108,7 @@ function douxItte() {
 
   resultat = resultat.join(" ");
 
-  addHistoryLine("["+currentMode.label+"] "+resultat);
+  addHistoryLine("["+currentMode.label+"] "+ resultat);
   renderHistory();
   renderResult("result", resultat);
 }
@@ -236,24 +117,36 @@ function douxItte() {
 function addNom() {
   newNom = document.getElementById("new_nom").value;
   data.noms = addWordIn(newNom, data.noms);
+  updateData();
   renderUIInfo();
 }
 
 function addAdjectif() {
   newAdjectif = document.getElementById("new_adjectif").value;
   data.adjectifs = addWordIn(newAdjectif, data.adjectifs);
+  updateData();
   renderUIInfo();
+}
+
+function start() {
+  if (data === null) {
+    data = dataIfNoJSON;
+    console.log("Loaded static json from js");
+  }
+  renderUIInfo();
+  douxItte();
 }
 
 
 function init() {
-  loadJSON(function(response) {
+  loadData();
+  /*loadJSON(function(response) {
     // Parse JSON string into object
     data = JSON.parse(response);
-    renderUIInfo();
-    douxItte();
-  });
+    start();
+  });*/
 }
+
 
 //  Assign callback to events.
 const $btn = document.getElementById("regenerate"),
@@ -263,6 +156,7 @@ const $btn = document.getElementById("regenerate"),
 $btn.addEventListener("click", douxItte);
 $btnAddNoms.addEventListener("click", addNom);
 $btnAddAdjectifs.addEventListener("click", addAdjectif);
+window.addEventListener('DataReady', start);
 
 
 //  First load
