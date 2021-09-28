@@ -103,7 +103,7 @@ function loadJSON(callback) {
     xobj.open('GET', 'https://mamarmite.github.io/expression-generator/noms.json', true);
 
     xobj.onreadystatechange = function () {
-        if (xobj.readyState === 4 && xobj.status === "200") {
+        if (xobj.readyState == 4 && xobj.status == "200") {
             callback(xobj.responseText);
         }
     };
