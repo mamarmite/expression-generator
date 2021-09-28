@@ -175,7 +175,7 @@ function douxItte() {
   let resultat;
 
   if (verbMode) {
-    resultat = [nom, "est", adjectif.toLowerCase()].join(" ");
+    resultat = [nom, adjectif.toLowerCase()].join(" ");
   } else {
     resultat = [adjectif, nom.toLowerCase()].join(" ");
   }
