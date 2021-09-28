@@ -92,6 +92,29 @@ var adjectifsIfNoJSON = [
   "Urbain",
 ];
 
+const name = 'nom',
+    adjective = 'adjectif';
+
+var modes = [
+  {
+    "limitUp": 0.33,
+    "limitdown": 0,
+    "label": "N+A",
+    "config": [name, adjective]
+  },
+  {
+    "limitUp": 0.66,
+    "limitdown": 0.34,
+    "label": "A+N",
+    "config": [adjective, name]
+  },
+  {
+    "limitUp": 1,
+    "limitdown": 0.67,
+    "label": "N+N",
+    "config": [name, name]
+  }
+];
 
 
 function loadJSON(callback) {
@@ -120,6 +143,17 @@ function getIndexValue(targetArray, index= -1)
   } else {
     return targetArray[getRandomIndex(targetArray)];
   }
+}
+
+function getMode() {
+  var rand = Math.random(),
+      returnMode = modes[0];
+  modes.forEach(function(mode) {
+    if (rand >= mode.limitdown && rand <= mode.limitUp) {
+      returnMode = mode;
+    }
+  });
+  return returnMode;
 }
 
 
@@ -172,15 +206,28 @@ function douxItte() {
     adjectif = getIndexValue(adjectifs),//adjectifs[Math.floor(Math.random() * adjectifs.length)],
     verbMode = Math.random() < 0.5;
 
-  let resultat;
+  let resultat = [];
+  var currentMode = getMode();
 
-  if (verbMode) {
-    resultat = [nom, adjectif.toLowerCase()].join(" ");
-  } else {
-    resultat = [adjectif, nom.toLowerCase()].join(" ");
-  }
+  console.log(currentMode);
 
-  addHistoryLine(resultat);
+  currentMode.config.forEach(function(word, index) {
+    let targetWord = "";
+    if (word === name) {
+      targetWord = getIndexValue(noms);
+    }
+    if (word === adjective) {
+      targetWord = getIndexValue(adjectifs);
+    }
+    if (index > 0) {
+      targetWord = targetWord.toLowerCase();
+    }
+    resultat.push(targetWord.toString());
+  });
+
+  resultat = resultat.join(" ");
+
+  addHistoryLine("["+currentMode.label+"] "+resultat);
   renderHistory();
   renderResult("result", resultat);
 }
