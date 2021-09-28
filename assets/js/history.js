@@ -1,8 +1,11 @@
 
 var expressionHistory = [];
 
-function addHistoryLine(line) {
+function addHistoryLine(line, render = true) {
     expressionHistory.push(line);
+    if (render) {
+        renderHistory();
+    }
 }
 
 function renderHistory() {

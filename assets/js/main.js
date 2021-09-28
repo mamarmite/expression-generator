@@ -1,24 +1,22 @@
-
-
 const name = 'nom',
     adjective = 'adjectif';
 
-var modes = [
+const modes = [
   {
     "limitUp": 0.33,
-    "limitdown": 0,
+    "limitDown": 0,
     "label": "N+A",
     "config": [name, adjective]
   },
   {
     "limitUp": 0.66,
-    "limitdown": 0.34,
+    "limitDown": 0.34,
     "label": "A+N",
     "config": [adjective, name]
   },
   {
     "limitUp": 1,
-    "limitdown": 0.67,
+    "limitDown": 0.67,
     "label": "N+N",
     "config": [name, name]
   }
@@ -41,10 +39,10 @@ function getIndexValue(targetArray, index= -1)
 
 
 function getMode() {
-  var rand = Math.random(),
+  let rand = Math.random(),
       returnMode = modes[0];
   modes.forEach(function(mode) {
-    if (rand >= mode.limitdown && rand <= mode.limitUp) {
+    if (rand >= mode.limitDown && rand <= mode.limitUp) {
       returnMode = mode;
     }
   });
@@ -52,20 +50,8 @@ function getMode() {
 }
 
 
-function renderResult(elementId, content) {
-  let $tag = document.getElementById(elementId);
-  $tag.innerHTML = content;
-}
-
-
-function renderUIInfo() {
-  renderResult("noms_count", "("+data.noms.length+")");
-  renderResult("adjectifs_count", "("+data.adjectifs.length+")");
-}
-
-
 function addWordIn(word, targetData) {
-  var canAddWord = true;
+  let canAddWord = true;
   //check if the word already exist.
   targetData.forEach(function(element) {
     if (word === element) {
@@ -81,16 +67,16 @@ function addWordIn(word, targetData) {
 }
 
 
-//encore btn - main action.
+/**
+ * Main action
+ * triggered on Click of "encore" btn.
+ * And on Start.
+ */
 function douxItte() {
-  var noms = data.noms,
-      adjectifs = data.adjectifs;
-
-  const nom = getIndexValue(noms),
-    adjectif = getIndexValue(adjectifs);
-
-  let resultat = [];
-  var currentMode = getMode();
+  let noms = data.noms,
+      adjectifs = data.adjectifs,
+      resultat = [],
+      currentMode = getMode();
 
   currentMode.config.forEach(function(word, index) {
     let targetWord = "";
@@ -108,26 +94,28 @@ function douxItte() {
 
   resultat = resultat.join(" ");
 
-  addHistoryLine("["+currentMode.label+"] "+ resultat);
-  renderHistory();
+  addHistoryLine("["+currentMode.label+"] "+ resultat);//render automatically.
   renderResult("result", resultat);
 }
 
 
 function addNom() {
-  newNom = document.getElementById("new_nom").value;
+  let newNom = document.getElementById("new_nom").value;
   data.noms = addWordIn(newNom, data.noms);
   updateData();
   renderUIInfo();
 }
 
+
 function addAdjectif() {
-  newAdjectif = document.getElementById("new_adjectif").value;
+  let newAdjectif = document.getElementById("new_adjectif").value;
   data.adjectifs = addWordIn(newAdjectif, data.adjectifs);
   updateData();
   renderUIInfo();
 }
 
+
+// Execute when DataReady is sent.
 function start() {
   if (data === null) {
     data = dataIfNoJSON;
@@ -139,23 +127,10 @@ function start() {
 
 
 function init() {
+  setBtnInteractivity();
   loadData();
-  /*loadJSON(function(response) {
-    // Parse JSON string into object
-    data = JSON.parse(response);
-    start();
-  });*/
 }
 
-
-//  Assign callback to events.
-const $btn = document.getElementById("regenerate"),
-  $btnAddNoms = document.getElementById('add_nom'),
-  $btnAddAdjectifs = document.getElementById('add_adjectif');
-
-$btn.addEventListener("click", douxItte);
-$btnAddNoms.addEventListener("click", addNom);
-$btnAddAdjectifs.addEventListener("click", addAdjectif);
 window.addEventListener('DataReady', start);
 
 
