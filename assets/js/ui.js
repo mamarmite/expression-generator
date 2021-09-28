@@ -10,7 +10,6 @@ function renderResult(elementId, content) {
   $tag.innerHTML = content;
 }
 
-
 //  Assign callback to events.
 const $btn = document.getElementById("regenerate"),
     $btnAddNoms = document.getElementById('add_nom'),
